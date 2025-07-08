@@ -17,7 +17,15 @@ import {
 
 const SettingsPage: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
+
+  const handleCurrencyChange = (currency: string) => {
+    updateUser({ currency });
+  };
+
+  const handleCountryChange = (country: string) => {
+    updateUser({ country });
+  };
 
   return (
     <div className="space-y-6">
@@ -113,6 +121,7 @@ const SettingsPage: React.FC = () => {
                 <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <select
                   value={user?.currency || 'USD'}
+                  onChange={(e) => handleCurrencyChange(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
                   {currencies.map(currency => (
@@ -130,6 +139,7 @@ const SettingsPage: React.FC = () => {
               </label>
               <select
                 value={user?.country || 'US'}
+                onChange={(e) => handleCountryChange(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 {countries.map(country => (

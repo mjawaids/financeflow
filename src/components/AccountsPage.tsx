@@ -6,13 +6,14 @@ import { Plus, CreditCard, Edit2, Trash2, DollarSign } from 'lucide-react';
 
 const AccountsPage: React.FC = () => {
   const { accounts, addAccount, updateAccount, deleteAccount } = useData();
+  const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAccount, setEditingAccount] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     type: 'bank' as 'bank' | 'cash' | 'mobile' | 'credit' | 'investment',
     balance: 0,
-    currency: 'USD',
+    currency: user?.currency || 'USD',
     icon: 'CreditCard'
   });
 
@@ -39,7 +40,7 @@ const AccountsPage: React.FC = () => {
       name: '',
       type: 'bank',
       balance: 0,
-      currency: 'USD',
+      currency: user?.currency || 'USD',
       icon: 'CreditCard'
     });
   };
@@ -208,7 +209,7 @@ const AccountsPage: React.FC = () => {
                       name: '',
                       type: 'bank',
                       balance: 0,
-                      currency: 'USD',
+                      currency: user?.currency || 'USD',
                       icon: 'CreditCard'
                     });
                   }}

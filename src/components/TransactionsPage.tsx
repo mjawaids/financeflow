@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useData } from '../contexts/DataContext';
+import { useAuth } from '../contexts/AuthContext';
+import { formatCurrency } from '../utils/formatters';
 import { 
   Search, 
   Filter, 
@@ -34,6 +36,7 @@ interface FilterState {
 
 const TransactionsPage: React.FC = () => {
   const { transactions, accounts, categories, wallets, deleteTransaction } = useData();
+  const { user } = useAuth();
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     search: '',
@@ -46,6 +49,8 @@ const TransactionsPage: React.FC = () => {
     amountMin: '',
     amountMax: ''
   });
+  
+  const userCurrency = user?.currency || 'USD';
 
   // Filter transactions based on current filters
   const filteredTransactions = useMemo(() => {
@@ -239,25 +244,25 @@ const TransactionsPage: React.FC = () => {
         />
         <StatCard
           title="Total Income"
-          value={`$${stats.totalIncome.toFixed(2)}`}
+         value={formatCurrency(stats.totalIncome, userCurrency)}
           icon={TrendingUp}
           color="text-emerald-600 dark:text-emerald-400"
         />
         <StatCard
           title="Total Expenses"
-          value={`$${stats.totalExpense.toFixed(2)}`}
+         value={formatCurrency(stats.totalExpense, userCurrency)}
           icon={TrendingDown}
           color="text-red-600 dark:text-red-400"
         />
         <StatCard
           title="Net Amount"
-          value={`$${stats.netAmount.toFixed(2)}`}
+         value={formatCurrency(stats.netAmount, userCurrency)}
           icon={DollarSign}
           color={stats.netAmount >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}
         />
         <StatCard
           title="Transfers"
-          value={`$${stats.totalTransfers.toFixed(2)}`}
+         value={formatCurrency(stats.totalTransfers, userCurrency)}
           icon={ArrowUpRight}
           color="text-blue-600 dark:text-blue-400"
         />
@@ -582,7 +587,7 @@ const TransactionsPage: React.FC = () => {
                               : 'text-blue-600 dark:text-blue-400'
                           }`}>
                             {transaction.type === 'income' ? '+' : transaction.type === 'expense' ? '-' : ''}
-                            ${transaction.amount.toFixed(2)}
+                            {formatCurrency(transaction.amount, userCurrency).replace(/^./, '')}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
