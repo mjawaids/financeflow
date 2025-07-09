@@ -1,41 +1,45 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 import { 
   Home, 
   Plus, 
   List,
   CreditCard, 
-  Tag, 
-  Wallet, 
+  Target, 
   Settings, 
   LogOut,
   Moon,
   Sun,
   TrendingUp
-} from 'lucide-react';
+} from 'lucide-react'
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { user, logout } = useAuth();
-  const { isDark, toggleTheme } = useTheme();
-  const location = useLocation();
+export function Layout({ children }: LayoutProps) {
+  const { user, signOut } = useAuth()
+  const location = useLocation()
+  const [isDark, setIsDark] = React.useState(() => {
+    return document.documentElement.classList.contains('dark')
+  })
+
+  const toggleTheme = () => {
+    setIsDark(!isDark)
+    document.documentElement.classList.toggle('dark')
+  }
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Add Transaction', href: '/transactions/new', icon: Plus },
     { name: 'Transactions', href: '/transactions', icon: List },
     { name: 'Accounts', href: '/accounts', icon: CreditCard },
-    { name: 'Categories', href: '/categories', icon: Tag },
-    { name: 'Wallets', href: '/wallets', icon: Wallet },
+    { name: 'Goals', href: '/goals', icon: Target },
     { name: 'Settings', href: '/settings', icon: Settings },
-  ];
+  ]
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
@@ -61,14 +65,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full flex items-center justify-center">
                   <span className="text-white text-sm font-medium">
-                    {user?.name?.[0]?.toUpperCase() || 'U'}
+                    {user?.user_metadata?.full_name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'U'}
                   </span>
                 </div>
-                <span className="text-sm text-gray-700 dark:text-gray-300">{user?.name}</span>
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  {user?.user_metadata?.full_name || user?.email}
+                </span>
               </div>
               
               <button
-                onClick={logout}
+                onClick={signOut}
                 className="p-2 rounded-lg text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
               >
                 <LogOut className="w-5 h-5" />
@@ -84,7 +90,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="p-4">
             <ul className="space-y-2">
               {navigation.map((item) => {
-                const Icon = item.icon;
+                const Icon = item.icon
                 return (
                   <li key={item.name}>
                     <Link
@@ -99,7 +105,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       <span className="font-medium">{item.name}</span>
                     </Link>
                   </li>
-                );
+                )
               })}
             </ul>
           </div>
@@ -113,7 +119,5 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </main>
       </div>
     </div>
-  );
-};
-
-export default Layout;
+  )
+}
