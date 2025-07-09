@@ -244,25 +244,25 @@ const TransactionsPage: React.FC = () => {
         />
         <StatCard
           title="Total Income"
-         value={formatCurrency(stats.totalIncome, userCurrency)}
+          value={formatCurrency(stats.totalIncome, userCurrency)}
           icon={TrendingUp}
           color="text-emerald-600 dark:text-emerald-400"
         />
         <StatCard
           title="Total Expenses"
-         value={formatCurrency(stats.totalExpense, userCurrency)}
+          value={formatCurrency(stats.totalExpense, userCurrency)}
           icon={TrendingDown}
           color="text-red-600 dark:text-red-400"
         />
         <StatCard
           title="Net Amount"
-         value={formatCurrency(stats.netAmount, userCurrency)}
+          value={formatCurrency(stats.netAmount, userCurrency)}
           icon={DollarSign}
           color={stats.netAmount >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}
         />
         <StatCard
           title="Transfers"
-         value={formatCurrency(stats.totalTransfers, userCurrency)}
+          value={formatCurrency(stats.totalTransfers, userCurrency)}
           icon={ArrowUpRight}
           color="text-blue-600 dark:text-blue-400"
         />

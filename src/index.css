@@ -6,22 +6,52 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  color-scheme: light dark;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: #f8fafc;
+  color: #1f2937;
 }
 
 .dark body {
-  background-color: #111827;
+  background-color: #0f172a;
+  color: #f1f5f9;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
 }
+
+/* Fix for dynamic color classes */
+.text-red-600 { color: #dc2626; }
+.text-red-400 { color: #f87171; }
+.text-emerald-600 { color: #059669; }
+.text-emerald-400 { color: #34d399; }
+.text-blue-600 { color: #2563eb; }
+.text-blue-400 { color: #60a5fa; }
+
+.bg-red-50 { background-color: #fef2f2; }
+.bg-red-100 { background-color: #fee2e2; }
+.bg-red-900\/20 { background-color: rgba(127, 29, 29, 0.2); }
+.bg-red-900\/30 { background-color: rgba(127, 29, 29, 0.3); }
+
+.bg-emerald-50 { background-color: #ecfdf5; }
+.bg-emerald-100 { background-color: #d1fae5; }
+.bg-emerald-900\/20 { background-color: rgba(6, 78, 59, 0.2); }
+.bg-emerald-900\/30 { background-color: rgba(6, 78, 59, 0.3); }
+
+.bg-blue-50 { background-color: #eff6ff; }
+.bg-blue-100 { background-color: #dbeafe; }
+.bg-blue-900\/20 { background-color: rgba(30, 58, 138, 0.2); }
+.bg-blue-900\/30 { background-color: rgba(30, 58, 138, 0.3); }
+
+.border-red-500 { border-color: #ef4444; }
+.border-emerald-500 { border-color: #10b981; }
+.border-blue-500 { border-color: #3b82f6; }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -54,8 +84,37 @@ body {
 }
 
 /* Smooth transitions */
-* {
+*,
+*::before,
+*::after {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* Form focus styles */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Button hover effects */
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Card hover effects */
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
 }

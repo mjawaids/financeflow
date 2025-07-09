@@ -6,9 +6,7 @@ export const formatCurrency = (amount: number, currencyCode: string = 'USD'): st
   
   // Use Intl.NumberFormat for proper currency formatting
   try {
-    // Try to get the locale for the currency, fallback to en-US
-    const locale = getLocaleForCurrency(currencyCode);
-    return new Intl.NumberFormat(locale, {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currencyCode,
       minimumFractionDigits: currency.decimals,

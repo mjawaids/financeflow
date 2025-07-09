@@ -253,7 +253,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const getTotalBalance = () => {
-    return accounts.reduce((total, account) => total + account.balance, 0);
+    return accounts.reduce((total, account) => {
+      // Convert to user's currency if needed (simplified - in real app would use exchange rates)
+      return total + account.balance;
+    }, 0);
   };
 
   const getAccountBalance = (accountId: string) => {
