@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../contexts/DataContext';
+import { useAuth } from '../contexts/AuthContext';
 import { countries } from '../utils/countries';
 import { currencies } from '../utils/currencies';
 import { Plus, CreditCard, Edit2, Trash2, DollarSign } from 'lucide-react';
